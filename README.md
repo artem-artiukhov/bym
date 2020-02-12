@@ -1,3 +1,3 @@
-# {{cookiecutter.app_name|upper}} service
+# microblog service
 
-A sample service bootstrapped from LEAN Cookiecutter.
+Test task for BYM.
