@@ -1,6 +1,6 @@
 import click
 from flask.cli import with_appcontext
-from {{cookiecutter.app_name}}.extensions import db
+from microblog.extensions import db
 
 
 @click.command()
@@ -9,7 +9,7 @@ def createsuperuser():
     """Init application, create database tables
     and create a new user named admin with password admin
     """
-    from {{cookiecutter.app_name}}.models import User
+    from microblog.models import User
 
     click.echo("creating user")
     user = User(

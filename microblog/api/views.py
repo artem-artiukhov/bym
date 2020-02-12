@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask_restplus import Api
 
-from {{cookiecutter.app_name}}.api.resources import UserResource, UserList
+from microblog.api.resources import UserResource, UserList
 
 
 blueprint = Blueprint('api', __name__, url_prefix='/api/v1')

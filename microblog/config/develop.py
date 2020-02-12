@@ -8,4 +8,4 @@ POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
 POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
 
 SQLALCHEMY_DATABASE_URI = \
-    f'postgresql://{{cookiecutter.app_name}}_service:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/dev_{{cookiecutter.app_name}}_service'
+    f'postgresql://microblog_service:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/dev_microblog_service'

@@ -1,4 +1,4 @@
-from {{cookiecutter.app_name}}.extensions import db, pwd_context
+from microblog.extensions import db, pwd_context
 
 
 class User(db.Model):

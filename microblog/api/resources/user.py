@@ -1,9 +1,9 @@
 from flask import request
 from flask_restplus import Resource
-from tetamn_common.utils.pagination import paginate
+from microblog.commons.pagination import paginate
 
-from {{cookiecutter.app_name}}.models import User
-from {{cookiecutter.app_name}}.extensions import ma, db
+from microblog.models import User
+from microblog.extensions import ma, db
 
 
 class UserSchema(ma.ModelSchema):

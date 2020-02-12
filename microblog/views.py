@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from {{cookiecutter.app_name}}.extensions import db
+from microblog.extensions import db
 
 blueprint = Blueprint('core_views', __name__)
 
