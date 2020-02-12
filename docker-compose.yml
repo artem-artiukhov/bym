@@ -10,7 +10,7 @@ services:
       - FLASK_APP=autoapp.py
       - APPLICATION_CONFIG=config/develop.py
       - POSTGRES_HOST=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=microblog
     image: microblog_service_web
     build:
       context: "microblog-service"
@@ -28,9 +28,9 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_USER: microblog_service
-      POSTGRES_DB: dev_microblog_service
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: microblog
+      POSTGRES_DB: microblog
+      POSTGRES_PASSWORD: microblog
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:

@@ -1,0 +1,7 @@
+FLASK_ENV=development
+FLASK_APP=autoapp.py
+
+POSTGRES_DB=microblog
+POSTGRES_USER=microblog
+POSTGRES_PASSWORD=microblog
+POSTGRES_HOST=localhost

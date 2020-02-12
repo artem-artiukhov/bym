@@ -4,8 +4,8 @@
 """
 import os
 
-POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD')
-POSTGRES_HOST = os.environ.get('POSTGRES_HOST')
+POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'microblog')
+POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'microblog')
 
 SQLALCHEMY_DATABASE_URI = \
-    f'postgresql://microblog_service:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/dev_microblog_service'
+    f'postgresql://microblog:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/microblog'
