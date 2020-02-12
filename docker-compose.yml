@@ -11,7 +11,7 @@ services:
       - APPLICATION_CONFIG=config/develop.py
       - POSTGRES_HOST=postgres
       - POSTGRES_PASSWORD=password
-    image: {{cookiecutter.app_name}}_service_web
+    image: microblog_service_web
     build:
       context: "microblog-service"
       dockerfile: Dockerfile
@@ -28,8 +28,8 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_USER: {{cookiecutter.app_name}}_service
-      POSTGRES_DB: dev_{{cookiecutter.app_name}}_service
+      POSTGRES_USER: microblog_service
+      POSTGRES_DB: dev_microblog_service
       POSTGRES_PASSWORD: password
     volumes:
       - pgdata:/var/lib/postgresql/data
