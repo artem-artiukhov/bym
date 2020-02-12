@@ -1,0 +1,11 @@
+-e git+http://internal-gitlab:NxeePDoaK1dMiZzqUKg4@gitlab.lean/lean_intellias/backend/tetamn_common.git@0.5.7#egg=tetamn_common
+
+flask
+flask-restplus
+flask-migrate
+flask-sqlalchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+python-dotenv
+passlib
+psycopg2-binary

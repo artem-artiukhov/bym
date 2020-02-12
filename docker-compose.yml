@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  # Main web service
+  web:
+    restart: always
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=autoapp.py
+      - APPLICATION_CONFIG=config/develop.py
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=password
+    image: {{cookiecutter.app_name}}_service_web
+    build:
+      context: "microblog-service"
+      dockerfile: Dockerfile
+    command: >
+      sh -c "flask db upgrade; flask run --host 0.0.0.0"
+    volumes:
+      - ./:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+  # Database instance
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: {{cookiecutter.app_name}}_service
+      POSTGRES_DB: dev_{{cookiecutter.app_name}}_service
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+
+volumes:
+  pgdata:

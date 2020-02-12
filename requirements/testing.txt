@@ -1,0 +1,10 @@
+-r base.txt
+
+factory-boy
+pylint
+pytest
+pytest-cov
+pytest-spec
+pytest-mock
+pytest-flask
+pytest-factoryboy

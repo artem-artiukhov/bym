@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  microblog-service:
+    build:
+      dockerfile: ./Dockerfile
+      context: ../..
+    image: ${CI_SEHA_IMAGE_NAME}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+      update_config:
+        delay: 10s
+        failure_action: rollback
+    ports:
+      - target: 5000
+      - published: ${CI_SEHA_APPLICATION_PORT}
+    healthcheck:
+      test: "curl -sf http://127.0.0.1:5000/healthcheck || exit 1"
+    environment:
+      - APPLICATION_CONFIG=${CI_SEHA_APPLICATION_CONFIG}
+      - POSTGRES_HOST=${CI_SEHA_POSTGRES_HOST}
+      - POSTGRES_PASSWORD=${CI_SEHA_POSTGRES_PASS}
+      - ISC_ISSUER=${CI_SEHA_ISC_ISSUER}

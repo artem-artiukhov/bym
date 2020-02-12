@@ -1,0 +1,129 @@
+image: docker:stable
+
+variables:
+  CI_SEHA_REGISTRY_IMAGE: registry.lean.sa
+  CI_SEHA_IMAGE_TAG: "${CI_COMMIT_REF_SLUG}_${CI_COMMIT_SHORT_SHA}"
+  CI_SEHA_DEPLOY_STACK_TIMEOUT: 600
+  CI_SEHA_SERVICE_NAME: "microblog-service"
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  CI_SEHA_IMAGE_NAME: "${CI_SEHA_REGISTRY_IMAGE}/${CI_SEHA_SERVICE_NAME}:${CI_COMMIT_REF_SLUG}_${CI_COMMIT_SHORT_SHA}"
+  # CI_DEBUG_TRACE: "true"
+
+services:
+  - docker:dind
+
+before_script:
+    # Install dependencies
+  - apk update -q && apk add py-pip python-dev libffi-dev openssl-dev gcc libc-dev make tzdata openssh-client
+    # Little hack
+  - docker pull gitlab/gitlab-runner-helper:x86_64-1f513601
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  variables:
+    CI_SEHA_APPLICATION_PORT: 1488  # Just a stub
+  script:
+    - docker-compose -f deploy/docker-compose.yml build --pull
+    - docker-compose -f deploy/docker-compose.yml push
+
+test:
+  stage: test
+  image: ${CI_SEHA_REGISTRY_IMAGE}/${CI_SEHA_SERVICE_NAME}:${CI_SEHA_IMAGE_TAG}
+  before_script: []
+  script:
+    - pip install -U pip setuptools
+    - pip install -r requirements/testing.txt
+    - pylint microblog tests
+    - pytest
+  coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
+  dependencies: []
+  except:
+    - /^wip[\/_-].+$/
+
+.deployment_script: &deployment_script
+  stage: deploy
+  before_script:
+      # Configure SSH
+    - which ssh-agent || apk add openssh-client
+    - mkdir -p ~/.ssh && chmod -R 700 ~/.ssh
+    - eval $(ssh-agent -s) && echo "${CI_SEC_SWARM_SSHKEY}" | tr -d "\r" | ssh-add - > /dev/null
+  script: |
+    # ssh -o StrictHostKeyChecking=no centos@${CI_SEHA_SWARM_MASTER} \
+    # " docker login -u ${CI_DEPLOY_USER} -p ${CI_DEPLOY_PASSWORD} ${CI_REGISTRY}
+    # docker system prune --all --force"
+
+    ssh -o StrictHostKeyChecking=no centos@${CI_SEHA_SWARM_MASTER} \
+    " $(env|grep ^CI_SEHA|xargs) docker stack deploy --with-registry-auth \
+    --compose-file - ${CI_ENVIRONMENT_NAME}" < deploy/docker-compose.yml
+
+    ssh -o StrictHostKeyChecking=no centos@${CI_SEHA_SWARM_MASTER} \
+    " $(env|grep ^CI_SEHA|xargs) bash -s -- -t ${CI_SEHA_DEPLOY_STACK_TIMEOUT} \
+    ${CI_ENVIRONMENT_NAME}" < deploy/docker-stack-wait.sh
+
+deploy_develop:
+  environment:
+    name: develop
+  <<: *deployment_script
+  variables:
+    CI_SEC_SWARM_SSHKEY: ${CI_SEC_DEV_SWARM_SSHKEY}
+    CI_SEHA_POSTGRES_HOST: ${CI_SEHA_DEV_POSTGRES_HOST}
+    CI_SEHA_POSTGRES_PASS: ${CI_SEHA_DEV_POSTGRES_PASS}
+    CI_SEHA_SWARM_MASTER: ${CI_SEHA_DEV_SWARM_MASTER}
+    CI_SEHA_ISC_ISSUER: ${CI_SEHA_DEV_ISC_ISSUER}
+    CI_SEHA_APPLICATION_CONFIG: config/develop.py
+    CI_SEHA_APPLICATION_PORT: 7012
+  only:
+    - develop
+
+deploy_qa:
+  environment:
+    name: qa
+    url: https://10.11.52.11
+  <<: *deployment_script
+  variables:
+    CI_SEC_SWARM_SSHKEY: ${CI_SEC_QA_SWARM_SSHKEY}
+    CI_SEHA_SWARM_MASTER: ${CI_SEHA_QA_SWARM_MASTER}
+    CI_SEHA_POSTGRES_HOST: ${CI_SEHA_QA_POSTGRES_HOST}
+    CI_SEHA_POSTGRES_PASS: ${CI_SEHA_QA_POSTGRES_PASS}
+    CI_SEHA_ISC_ISSUER: ${CI_SEHA_QA_ISC_ISSUER}
+    CI_SEHA_APPLICATION_CONFIG: config/qa.py
+    CI_SEHA_APPLICATION_PORT: 7012
+  only:
+    - qa
+
+deploy_staging:
+  environment:
+    name: staging
+  <<: *deployment_script
+  variables:
+    CI_SEC_SWARM_SSHKEY: ${CI_SEC_STG_SWARM_SSHKEY}
+    CI_SEHA_POSTGRES_HOST: ${CI_SEHA_STG_POSTGRES_HOST}
+    CI_SEHA_POSTGRES_PASS: ${CI_SEHA_STG_POSTGRES_PASS}
+    CI_SEHA_SWARM_MASTER: ${CI_SEHA_STG_SWARM_MASTER}
+    CI_SEHA_ISC_ISSUER: ${CI_SEHA_STG_ISC_ISSUER}
+    CI_SEHA_APPLICATION_CONFIG: config/staging.py
+    CI_SEHA_APPLICATION_PORT: 5012
+  only:
+    - staging
+
+deploy_prod:
+  environment:
+    name: production
+  <<: *deployment_script
+  variables:
+    CI_SEC_SWARM_SSHKEY: ${CI_SEC_PRO_SWARM_SSHKEY}
+    CI_SEHA_POSTGRES_HOST: ${CI_SEHA_PRO_POSTGRES_HOST}
+    CI_SEHA_POSTGRES_PASS: ${CI_SEHA_PRO_POSTGRES_PASS}
+    CI_SEHA_SWARM_MASTER: ${CI_SEHA_PRO_SWARM_MASTER}
+    CI_SEHA_ISC_ISSUER: ${CI_SEHA_PRO_ISC_ISSUER}
+    CI_SEHA_APPLICATION_CONFIG: config/production.py
+    CI_SEHA_APPLICATION_PORT: 5012
+  when: manual
+  only:
+    - tags
+    - master
