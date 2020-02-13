@@ -1,8 +1,10 @@
 flask
+flask_jwt_extended
 flask-restplus
 flask-migrate
 flask-sqlalchemy
 flask-marshmallow
+forgerypy
 marshmallow-sqlalchemy
 python-dotenv
 passlib

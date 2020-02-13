@@ -1,21 +1,13 @@
 from flask import request
-from flask_restplus import Resource
+from .base import BaseResource
 from microblog.commons.pagination import paginate
 
 from microblog.models import User
-from microblog.extensions import ma, db
+from microblog.extensions import db
+from microblog.api.schemas import UserSchema
 
 
-class UserSchema(ma.ModelSchema):
-
-    password = ma.String(load_only=True, required=True)
-
-    class Meta:
-        model = User
-        sqla_session = db.session
-
-
-class UserResource(Resource):
+class UserResource(BaseResource):
     """Single object resource
     """
 
@@ -41,7 +33,7 @@ class UserResource(Resource):
         return {"message": "OK"}
 
 
-class UserList(Resource):
+class UserList(BaseResource):
     """Creation and get_all
     """
 

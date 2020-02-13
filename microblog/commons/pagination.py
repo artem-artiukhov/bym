@@ -51,5 +51,5 @@ def paginate(query, schema):
         'pages': page_obj.pages,
         'next': next,
         'prev': prev,
-        'results': schema.dump(page_obj.items).data
+        'results': schema.dump(page_obj.items)
         })

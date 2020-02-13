@@ -1,8 +1,7 @@
 from flask import Flask
 
 from microblog import api, commands, views
-from microblog.extensions import db, migrate
-
+from microblog.extensions import (db, migrate, jwt)
 
 def create_app(config=None, testing=False):
     """Application factory, used to create application
@@ -36,6 +35,7 @@ def configure_extensions(app):
     """
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
 
 
 def register_blueprints(app):

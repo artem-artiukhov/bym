@@ -3,19 +3,6 @@
 from microblog.commons.helpers import wrap_envelope
 
 
-class TokenVerificationError(Exception):
-    """Temporary Reset Token Verification Exception."""
-    pass
-
-
-class TransitionHandlerException(Exception):
-    pass
-
-
-class WebSocketAuthError(Exception):
-    pass
-
-
 class ServiceError(Exception):
     """Error class intended to return flask response with error code."""
 
