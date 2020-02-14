@@ -1,5 +1,6 @@
 from .user import UserResource, UserList
 from .user_auth import UserSignIn, UserSignOut
+from .posts import Posts, MyPosts, PostView
 
 
 __all__ = [
@@ -7,4 +8,7 @@ __all__ = [
     'UserList',
     'UserSignIn',
     'UserSignOut',
+    'Posts',
+    'MyPosts',
+    'PostView',
 ]

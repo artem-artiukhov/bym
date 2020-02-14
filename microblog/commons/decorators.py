@@ -2,11 +2,31 @@
 from functools import wraps
 
 from flask import request
-from flask_jwt_extended import get_raw_jwt, current_user
+from flask_jwt_extended import jwt_required, get_raw_jwt, current_user
 
 import microblog.commons.errors as err
 from microblog.commons.exceptions import ServiceError
 from microblog.managers.login import UserLoginManager
+
+
+@jwt_required
+def get_user_uli():
+    token_type = get_raw_jwt()['type']
+    jti = get_raw_jwt()['jti']
+    uli = getattr(UserLoginManager,
+                  f'get_login_info_by_{token_type}_jti')(current_user, jti)
+
+    if not uli:
+        raise ServiceError(*err.ACCESS_DENIED)
+
+    if request.headers.get('User-Agent') != uli.user_agent:
+        UserLoginManager.revoke(uli)
+        raise ServiceError(*err.ACCESS_DENIED)
+
+    user = current_user
+    uli = uli
+
+    return user, uli
 
 
 def verify_identity(jwt):
