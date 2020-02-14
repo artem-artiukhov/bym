@@ -7,7 +7,7 @@ import os
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 root = lambda *x: os.path.join(PROJECT_ROOT, *x)
 DEBUG = True
-PROPAGATE_EXCEPTIONS = False
+PROPAGATE_EXCEPTIONS = True
 
 SECRET_KEY = '23r2@$@!DQW%#@QDasdsa2142--a(*!'
 

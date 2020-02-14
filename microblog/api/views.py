@@ -21,3 +21,6 @@ api.add_resource(UserSignOut, '/signout')
 api.add_resource(Posts, '/posts')
 api.add_resource(MyPosts, '/my-posts')
 api.add_resource(PostView, '/posts/<int:p_id>')
+
+# rating
+# api.add_resource(Rating, '/rating')
