@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask import request
-from sqlalchemy import and_, or_, all_
+from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
 import microblog.commons.errors as err
@@ -44,9 +44,12 @@ class Post(db.Model):
     @classmethod
     def get_view_query(cls):
         f_list = []
-        if 'hashtags' in request.args:
+        default_query = cls.query
+
+        if 'hashtags' in request.args and any(request.args['hashtags'].split(',')):
             for v in request.args['hashtags'].split(','):
                 f_list.append(getattr(HashTags, 'hashtag') == v)
-        default_query = cls.query.filter(and_(*f_list))
+
+            default_query = cls.query.filter(or_(*f_list))
 
         return default_query
