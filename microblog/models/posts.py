@@ -1,11 +1,13 @@
 from datetime import datetime
 
+from flask import request
+from sqlalchemy import and_, or_, all_
 from sqlalchemy.exc import IntegrityError
 
 import microblog.commons.errors as err
 from microblog.commons.exceptions import ServiceError
 from microblog.extensions import db
-from microblog.models.hashtags import AssociationHashTags
+from microblog.models.hashtags import AssociationHashTags, HashTags
 
 
 class Post(db.Model):
@@ -38,3 +40,13 @@ class Post(db.Model):
     @classmethod
     def find_by_id(cls, _id):
         return cls.query.filter_by(id=_id).first()
+
+    @classmethod
+    def get_view_query(cls):
+        f_list = []
+        if 'hashtags' in request.args:
+            for v in request.args['hashtags'].split(','):
+                f_list.append(getattr(HashTags, 'hashtag') == v)
+        default_query = cls.query.filter(and_(*f_list))
+
+        return default_query

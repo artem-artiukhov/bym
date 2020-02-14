@@ -1,5 +1,5 @@
 from flask import request
-from flask_jwt_extended import jwt_required, get_raw_jwt, current_user
+from flask_jwt_extended import jwt_required
 
 import microblog.commons.errors as err
 from microblog.api.schemas import PostInfoSchema, PostCreateSchema
@@ -17,7 +17,7 @@ class Posts(BaseResource):
 
     @jwt_required
     def get(self):
-        query = Post.query
+        query = Post.get_view_query()
         return paginate(query, PostInfoSchema(many=True))
 
     @jwt_required
