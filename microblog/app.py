@@ -1,7 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify
+from werkzeug.exceptions import HTTPException
 
 from microblog import api, commands, views
+from microblog.commons.exceptions import ServiceError
 from microblog.extensions import (db, migrate, jwt)
+
 
 def create_app(config=None, testing=False):
     """Application factory, used to create application
@@ -13,7 +16,25 @@ def create_app(config=None, testing=False):
     register_blueprints(app)
     register_commands(app)
     register_shellcontext(app)
+    register_flask_handlers(app)
+
     return app
+
+def register_flask_handlers(app):
+
+    @app.errorhandler(ServiceError)
+    def handle_service_error(error):
+        """Register and handle ServiceError."""
+        response = jsonify(error.to_dict())
+        response.status_code = error.status_code
+        return response
+
+    @app.errorhandler(Exception)
+    def handle_exception(error):
+        """Handle general exceptions."""
+        if isinstance(error, HTTPException):
+            return error
+        return 'Internal Server Error', 500
 
 
 def configure_app(app, testing=False):
