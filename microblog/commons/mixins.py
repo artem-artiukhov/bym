@@ -67,7 +67,7 @@ class PrefixKeyFieldMixin:
 
 class UnwrapDataMixin:
     @pre_load
-    def unwrap_envelope(self, data):
+    def unwrap_envelope(self, data, **kwargs):
         # if not data or 'data' not in data:
         #     common_error.with_error(**get_error(ec.REQUEST_BODY_NOT_PREFIXED_5100)).raise_(422)
         return data['data']

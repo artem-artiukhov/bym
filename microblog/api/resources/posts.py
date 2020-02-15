@@ -29,9 +29,8 @@ class Posts(BaseResource):
 
         data = request.get_json()
         data['data']['author_id'] = user.id
-        print(data)
 
-        content_new = PostCreateSchema().load(unwrap_envelope(data))
+        content_new = PostCreateSchema().load(data)
 
         content_new.save_to_db()
         return PostInfoSchema().dump(content_new), 201

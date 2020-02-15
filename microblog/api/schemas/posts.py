@@ -1,7 +1,10 @@
+import datetime
+
 from marshmallow import pre_load
 
 from microblog.extensions import ma, db
 from microblog.commons.mixins import DataSchemaMixin
+from microblog.commons.helpers import unwrap_envelope, wrap_envelope
 from microblog.models import Post, HashTags
 from microblog.api.schemas.hashtags import (HashtagInfoSchema,
                                             HashtagCreateSchema)
@@ -17,8 +20,9 @@ class PostSchemaGeneric(DataSchemaMixin, ma.ModelSchema):
     @pre_load
     def check_hashtags(self, data, **kwargs):
         """Replace hashtags wording with proper ids in case if they already exists."""
-        data_ = data
+        data_ = unwrap_envelope(data)
         hashtags = data_.get('hashtags')
+
         if not hashtags:
             return data
 
@@ -29,7 +33,7 @@ class PostSchemaGeneric(DataSchemaMixin, ma.ModelSchema):
 
         data_['hashtags'] = ht_new
 
-        return data_
+        return wrap_envelope(data_)
 
 
 class PostInfoSchema(PostSchemaGeneric):
@@ -40,4 +44,5 @@ class PostInfoSchema(PostSchemaGeneric):
 class PostCreateSchema(PostSchemaGeneric):
     author_id = ma.Integer(required=True)
     hashtags = ma.Nested(HashtagCreateSchema, many=True)
+    # timestamp = ma.DateTime(required=False, default=datetime.datetime.now())
 
