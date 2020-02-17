@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required
 import microblog.commons.errors as err
 from microblog.api.schemas import PostInfoSchema, PostCreateSchema
 from microblog.commons.exceptions import ServiceError
-from microblog.commons.helpers import wrap_envelope, unwrap_envelope
+from microblog.commons.helpers import wrap_envelope
 from microblog.commons.decorators import get_user_uli
 from microblog.commons.pagination import paginate
 from microblog.extensions import db

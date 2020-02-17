@@ -3,7 +3,8 @@ from flask_restplus import Api
 
 from microblog.api.resources import (UserResource, UserList,
                                      UserSignIn, UserSignOut,
-                                     Posts, MyPosts, PostView)
+                                     Posts, MyPosts, PostView,
+                                     RatingView)
 
 
 blueprint = Blueprint('api', __name__, url_prefix='/api/v1')
@@ -23,4 +24,4 @@ api.add_resource(MyPosts, '/my-posts')
 api.add_resource(PostView, '/posts/<int:p_id>')
 
 # rating
-# api.add_resource(Rating, '/rating')
+api.add_resource(RatingView, '/rating')
