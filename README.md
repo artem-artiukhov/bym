@@ -6,12 +6,12 @@ Test task for BYM.
 
 This project created using Ubuntu 18.04
 
-You need PostgreSQL installed and you also need `microblog` database created there.
+You need PostgreSQL installed and you also need `microblog` database created there with corresponding user and password.
 
 
 Before you run server, you need to upgrade database using command `flask db upgrade` and to create number of fake users. To do it type `flask shell` and in shell you need to type the following commands:
 
-`from microblog.models import User`
+`from microblog.api.models import User`
 
 `User.generate_fake(count=100)`
 
