@@ -20,6 +20,7 @@ def create_app(config=None, testing=False):
 
     return app
 
+
 def register_flask_handlers(app):
 
     @app.errorhandler(ServiceError)

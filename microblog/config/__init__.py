@@ -5,7 +5,7 @@ Use env var to override
 import os
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-root = lambda *x: os.path.join(PROJECT_ROOT, *x)
+root = lambda *x: os.path.join(PROJECT_ROOT, *x)  # noqa E731
 DEBUG = True
 PROPAGATE_EXCEPTIONS = False
 

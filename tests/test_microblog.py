@@ -2,5 +2,5 @@
 class TestSampleFunctionality:
     """ Dummy test suite in order for gitlab CI checks to pass """
 
-    def test_{{cookiecutter.app_name}}(self):
+    def test_microblog(self):
         """ Dummy test """

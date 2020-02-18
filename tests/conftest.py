@@ -1,9 +1,9 @@
 import inspect
 import pytest
 
-import {{cookiecutter.app_name}}.models
-from {{cookiecutter.app_name}}.app import create_app
-from {{cookiecutter.app_name}}.extensions import db as _db
+import microblog.models
+from microblog.app import create_app
+from microblog.extensions import db as _db
 
 
 @pytest.fixture(scope='session')
@@ -29,6 +29,6 @@ def db(app):
 def cleanup(db):
     """ A little hack that cleans all produced db records after each test function execution """
     yield
-    for _, model in inspect.getmembers({{cookiecutter.app_name}}.models, inspect.isclass):
+    for _, model in inspect.getmembers(microblog.models, inspect.isclass):
         db.session.query(model).delete()
     db.session.commit()

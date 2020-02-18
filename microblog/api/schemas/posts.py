@@ -1,5 +1,3 @@
-import datetime
-
 from marshmallow import pre_load
 
 from microblog.extensions import ma, db
@@ -44,5 +42,3 @@ class PostInfoSchema(PostSchemaGeneric):
 class PostCreateSchema(PostSchemaGeneric):
     author_id = ma.Integer(required=True)
     hashtags = ma.Nested(HashtagCreateSchema, many=True)
-    # timestamp = ma.DateTime(required=False, default=datetime.datetime.now())
-

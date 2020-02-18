@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "ff35abd9-9304-4bcb-84c1-3c978b3d6ba4",
+		"name": "bym",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "signin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"email\": \"carol@voomm.mil\",\n        \"password\": \"Pa$$w0rd\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/signin",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"signin"
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "signout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE2NjE4NzIsIm5iZiI6MTU4MTY2MTg3MiwianRpIjoiMjE2OTE2MDEtODkwNC00YjM3LTg4NDMtMjA5MWNiNGU1NGU4IiwiZXhwIjoxNTg0MjUzODcyLCJpZGVudGl0eSI6MSwidHlwZSI6InJlZnJlc2gifQ.F1yo6LA4tos2ntX_Em7bLkdh30tRjhTjyY8nvSJvjuM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"email\": \"irene@skivee.net\",\n        \"password\": \"Pa$$w0rd\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/signout",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"signout"
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE5Mjk5NzksIm5iZiI6MTU4MTkyOTk3OSwianRpIjoiZDJjOTk0NjMtZDkzNS00MmE3LWIzODktOTc1NTY0YTg0YTE2IiwiZXhwIjoxNTgxOTUxNTc5LCJpZGVudGl0eSI6NTAsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.mLquGtVUnYK_23WQ5vUckVZl1YhK6X311dzeOUVOTpo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/posts?hashtags=ht1",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "hashtags",
+							"value": "ht1"
+						}
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE3NTEwODUsIm5iZiI6MTU4MTc1MTA4NSwianRpIjoiYmZlMmYzODItZDkyMi00NDY3LWFmZGUtZjliNmRmN2JjMTg3IiwiZXhwIjoxNTgxNzcyNjg1LCJpZGVudGl0eSI6NTAsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.4vx8mVOMMCyqCRoM0RD71bQ_2_nJmWLUTCPkzFsfqlg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"title\": \"my great post\",\n        \"body\": \"body of my greatest post\",\n        \"hashtags\": [            {\n                \"hashtag\": \"ht1\"\n            },\n            {\n                \"hashtag\": \"ht2\"\n            }]\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/posts",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"posts"
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE2NzE0MzMsIm5iZiI6MTU4MTY3MTQzMywianRpIjoiNTA0NzJiNDQtMzQ4Yi00NDAzLWI5YzgtNmUxYWNjNWE2ODZjIiwiZXhwIjoxNTgxNjkzMDMzLCJpZGVudGl0eSI6MSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.JUEfkwXyKxaro80CpHmFyP4lqCJd026btJFgmLXXJfU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/posts/1",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"posts",
+						"1"
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "my posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE2Njk2OTEsIm5iZiI6MTU4MTY2OTY5MSwianRpIjoiMjUzOWNkOWEtMWM2ZS00MzA5LWE4ZjktZTc5MTM3ZmNhMjhhIiwiZXhwIjoxNTgxNjkxMjkxLCJpZGVudGl0eSI6MSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.haxLRv1O-Vp-qp9fyw56FPlxubUcmVC7GRInlBVnXQg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/my-posts",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"my-posts"
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/users?page=2&page_size=50",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "page_size",
+							"value": "50"
+						}
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		},
+		{
+			"name": "ratings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODE5Mjk5NzksIm5iZiI6MTU4MTkyOTk3OSwianRpIjoiZDJjOTk0NjMtZDkzNS00MmE3LWIzODktOTc1NTY0YTg0YTE2IiwiZXhwIjoxNTgxOTUxNTc5LCJpZGVudGl0eSI6NTAsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.mLquGtVUnYK_23WQ5vUckVZl1YhK6X311dzeOUVOTpo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{prot}}://{{host}}:{{port}}/api/{{api_ver}}/rating",
+					"protocol": "{{prot}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"{{api_ver}}",
+						"rating"
+					]
+				},
+				"description": "allows user to login system"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

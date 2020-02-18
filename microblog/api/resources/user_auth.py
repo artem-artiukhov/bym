@@ -30,7 +30,6 @@ class UserSignIn(BaseResource):
         user = User.find_by_email(email)
 
         if not user:
-            # self._log.warning('Failed to sign in - user <%s> does not exist', email)
             raise ServiceError(*err.WRONG_CREDENTIALS)
 
         if user.blocked_until and user.blocked_until > datetime.datetime.now():
@@ -41,7 +40,6 @@ class UserSignIn(BaseResource):
             if user.attempts >= 5:
                 user.blocked_until = datetime.datetime.now() + datetime.timedelta(minutes=5)
                 user.attempts = 0
-            # self._log.warning('Failed to sign in - wrong credentials for %s', user)
 
             user.save_to_db()
 
@@ -51,15 +49,9 @@ class UserSignIn(BaseResource):
         user.blocked_until = None
 
         access_token, refresh_token, uli = UserLoginManager.create_user_login(user)
-        # if errors:
-            # self._log.error('Failed to create user login for %s: %s', user, errors)
-            # raise ServiceError(*err.MARSHMALLOW_VALIDATION_ERROR)
 
         UserLoginManager.add_login_info(uli, user)
         user.save_to_db()
-        # self._log.debug('Created user login for %s - at: %s, rt: %s, uli: %s',
-        #                 user, access_token, refresh_token, uli)
-        # self._log.info('%s successfully signed in', user)
 
         return wrap_envelope({'msg': f'Signed in as {user.email}',
                               'access_token': access_token,

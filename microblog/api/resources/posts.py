@@ -53,7 +53,6 @@ class Posts(BaseResource):
         if cont_to_del.author_id != user.id:
             raise ServiceError(*err.ACCESS_DENIED)
 
-
         db.session.delete(cont_to_del)
         db.session.commit()
 
